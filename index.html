@@ -13,7 +13,7 @@
         
         body {
             font-family: "Microsoft YaHei", -apple-system, BlinkMacSystemFont, sans-serif;
-            background: linear-gradient(135deg, #000000 0%, #434343 100%);
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
             min-height: 100vh;
             padding: 10px;
         }
@@ -22,8 +22,8 @@
             max-width: 500px;
             margin: 20px auto;
             background: white;
-            border-radius: 16px;
-            box-shadow: 0 10px 40px rgba(0,0,0,0.5);
+            border-radius: 20px;
+            box-shadow: 0 20px 60px rgba(0,0,0,0.3);
             overflow: hidden;
         }
         
@@ -44,295 +44,427 @@
         
         .home-page {
             text-align: center;
-            padding: 40px 20px;
-            background: linear-gradient(135deg, #ff0000 0%, #000000 100%);
+            padding: 60px 30px;
+            background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);
             color: white;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .home-page::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            left: -50%;
+            width: 200%;
+            height: 200%;
+            background: radial-gradient(circle, rgba(255,255,255,0.1) 10%, transparent 10%);
+            background-size: 50px 50px;
+            animation: moveBackground 20s linear infinite;
+        }
+        
+        @keyframes moveBackground {
+            0% { transform: translate(0, 0); }
+            100% { transform: translate(50px, 50px); }
         }
         
         .logo {
-            font-size: 64px;
-            margin-bottom: 10px;
+            font-size: 80px;
+            margin-bottom: 20px;
             animation: pulse 2s infinite;
+            position: relative;
+            z-index: 1;
+            text-shadow: 0 0 20px rgba(255,255,255,0.5);
         }
         
         @keyframes pulse {
             0%, 100% { transform: scale(1); }
-            50% { transform: scale(1.1); }
+            50% { transform: scale(1.15); }
         }
         
         .main-title {
-            font-size: 42px;
+            font-size: 48px;
             font-weight: bold;
-            margin-bottom: 15px;
-            text-shadow: 3px 3px 6px rgba(0,0,0,0.5);
-            letter-spacing: 2px;
+            margin-bottom: 20px;
+            text-shadow: 3px 3px 10px rgba(0,0,0,0.3);
+            letter-spacing: 3px;
+            position: relative;
+            z-index: 1;
         }
         
         .subtitle {
-            font-size: 18px;
-            margin-bottom: 10px;
+            font-size: 20px;
+            margin-bottom: 15px;
             opacity: 0.95;
+            position: relative;
+            z-index: 1;
         }
         
         .desc {
-            font-size: 14px;
-            opacity: 0.8;
-            margin-bottom: 40px;
+            font-size: 16px;
+            opacity: 0.85;
+            margin-bottom: 50px;
+            position: relative;
+            z-index: 1;
         }
         
         .start-btn {
             background: white;
-            color: #ff0000;
+            color: #f5576c;
             border: none;
-            padding: 18px 50px;
-            font-size: 22px;
+            padding: 20px 60px;
+            font-size: 24px;
             font-weight: bold;
-            border-radius: 50px;
+            border-radius: 60px;
             cursor: pointer;
-            box-shadow: 0 8px 20px rgba(0,0,0,0.3);
+            box-shadow: 0 10px 30px rgba(0,0,0,0.3);
             transition: all 0.3s;
+            position: relative;
+            z-index: 1;
         }
         
         .start-btn:hover {
-            transform: translateY(-3px);
-            box-shadow: 0 12px 30px rgba(0,0,0,0.4);
+            transform: translateY(-5px) scale(1.05);
+            box-shadow: 0 15px 40px rgba(0,0,0,0.4);
         }
         
         /* 问卷页面样式 */
         .form-page {
-            padding: 30px 20px;
+            padding: 40px 30px;
+            background: linear-gradient(180deg, #fdfbfb 0%, #ebedee 100%);
         }
         
         .progress {
-            background: #f0f0f0;
-            height: 8px;
-            border-radius: 4px;
-            margin-bottom: 30px;
+            background: #e0e0e0;
+            height: 10px;
+            border-radius: 10px;
+            margin-bottom: 40px;
             overflow: hidden;
+            box-shadow: inset 0 2px 4px rgba(0,0,0,0.1);
         }
         
         .progress-bar {
             height: 100%;
-            background: linear-gradient(90deg, #ff0000, #ff6b6b);
-            transition: width 0.3s;
-            border-radius: 4px;
+            background: linear-gradient(90deg, #f093fb, #f5576c);
+            transition: width 0.4s ease;
+            border-radius: 10px;
+            box-shadow: 0 0 10px rgba(245,87,108,0.5);
         }
         
         .question {
-            margin-bottom: 30px;
+            margin-bottom: 35px;
+            animation: slideIn 0.3s ease;
+        }
+        
+        @keyframes slideIn {
+            from { opacity: 0; transform: translateX(-20px); }
+            to { opacity: 1; transform: translateX(0); }
         }
         
         .question-label {
-            font-size: 16px;
+            font-size: 18px;
             font-weight: bold;
             color: #333;
-            margin-bottom: 12px;
+            margin-bottom: 15px;
             display: block;
         }
         
         .question-label .required {
-            color: #ff0000;
+            color: #f5576c;
         }
         
         .options {
             display: flex;
             flex-direction: column;
-            gap: 10px;
+            gap: 12px;
         }
         
         .option {
-            padding: 15px;
-            background: #f8f8f8;
+            padding: 18px 20px;
+            background: white;
             border: 2px solid #e0e0e0;
-            border-radius: 10px;
+            border-radius: 12px;
             cursor: pointer;
             transition: all 0.3s;
             display: flex;
             align-items: center;
-            font-size: 15px;
+            font-size: 16px;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.05);
         }
         
         .option:hover {
-            border-color: #ff0000;
-            background: #fff5f5;
+            border-color: #f5576c;
+            background: #fff5f7;
+            transform: translateX(5px);
+            box-shadow: 0 4px 12px rgba(245,87,108,0.2);
         }
         
         .option input[type="radio"] {
-            margin-right: 10px;
+            margin-right: 12px;
             cursor: pointer;
-            accent-color: #ff0000;
+            accent-color: #f5576c;
+            width: 18px;
+            height: 18px;
         }
         
         .option.selected {
-            border-color: #ff0000;
-            background: #fff5f5;
+            border-color: #f5576c;
+            background: linear-gradient(135deg, #fff5f7 0%, #ffe5e9 100%);
+            box-shadow: 0 4px 15px rgba(245,87,108,0.3);
         }
         
         select {
             width: 100%;
-            padding: 15px;
-            font-size: 15px;
+            padding: 18px 20px;
+            font-size: 16px;
             border: 2px solid #e0e0e0;
-            border-radius: 10px;
+            border-radius: 12px;
             background: white;
             cursor: pointer;
-            transition: border-color 0.3s;
+            transition: all 0.3s;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.05);
         }
         
         select:focus {
             outline: none;
-            border-color: #ff0000;
+            border-color: #f5576c;
+            box-shadow: 0 4px 12px rgba(245,87,108,0.2);
         }
         
         .submit-btn {
             width: 100%;
-            padding: 18px;
-            font-size: 20px;
+            padding: 20px;
+            font-size: 22px;
             font-weight: bold;
-            background: linear-gradient(90deg, #ff0000, #cc0000);
+            background: linear-gradient(135deg, #f093fb, #f5576c);
             color: white;
             border: none;
-            border-radius: 12px;
+            border-radius: 15px;
             cursor: pointer;
             transition: all 0.3s;
-            margin-top: 30px;
+            margin-top: 40px;
+            box-shadow: 0 8px 20px rgba(245,87,108,0.4);
         }
         
         .submit-btn:hover {
-            transform: translateY(-2px);
-            box-shadow: 0 8px 20px rgba(255,0,0,0.4);
+            transform: translateY(-3px);
+            box-shadow: 0 12px 30px rgba(245,87,108,0.5);
         }
         
         .submit-btn:disabled {
             background: #ccc;
             cursor: not-allowed;
             transform: none;
+            box-shadow: none;
         }
         
         /* 结果页样式 */
         .result-page {
-            padding: 30px 20px;
+            padding: 40px 30px;
             text-align: center;
+            background: linear-gradient(180deg, #fdfbfb 0%, #ebedee 100%);
         }
         
         .result-badge {
-            font-size: 72px;
-            margin: 20px 0;
+            font-size: 90px;
+            margin: 30px 0;
+            animation: bounceIn 0.8s ease;
+        }
+        
+        @keyframes bounceIn {
+            0% { transform: scale(0); }
+            50% { transform: scale(1.2); }
+            100% { transform: scale(1); }
         }
         
         .result-title {
-            font-size: 36px;
+            font-size: 38px;
             font-weight: bold;
-            margin: 20px 0;
+            margin: 25px 0;
         }
         
         .result-rank {
-            font-size: 18px;
+            font-size: 20px;
             color: #666;
-            margin-bottom: 30px;
+            margin-bottom: 35px;
         }
         
         .result-comment {
-            font-size: 18px;
-            line-height: 1.8;
+            font-size: 19px;
+            line-height: 1.9;
             color: #333;
-            padding: 20px;
-            background: #f8f8f8;
-            border-radius: 12px;
-            margin-bottom: 30px;
+            padding: 25px;
+            background: white;
+            border-radius: 15px;
+            margin-bottom: 35px;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.08);
+            white-space: pre-line;
         }
         
         .analysis {
             text-align: left;
-            margin: 30px 0;
+            margin: 35px 0;
         }
         
         .analysis-title {
-            font-size: 20px;
+            font-size: 22px;
             font-weight: bold;
-            margin-bottom: 15px;
+            margin-bottom: 20px;
             color: #333;
         }
         
         .strength, .weakness {
-            padding: 15px;
-            border-radius: 10px;
-            margin-bottom: 15px;
+            padding: 20px;
+            border-radius: 12px;
+            margin-bottom: 18px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.05);
         }
         
         .strength {
-            background: #e8f5e9;
-            border-left: 4px solid #4caf50;
+            background: linear-gradient(135deg, #e8f5e9 0%, #c8e6c9 100%);
+            border-left: 5px solid #4caf50;
         }
         
         .weakness {
-            background: #ffebee;
-            border-left: 4px solid #f44336;
+            background: linear-gradient(135deg, #ffebee 0%, #ffcdd2 100%);
+            border-left: 5px solid #f44336;
         }
         
         .analysis-label {
             font-weight: bold;
-            margin-bottom: 8px;
+            margin-bottom: 10px;
+            font-size: 17px;
         }
         
         .analysis-content {
-            color: #666;
-            line-height: 1.6;
+            color: #555;
+            line-height: 1.7;
+            font-size: 16px;
         }
         
         .action-btns {
             display: flex;
-            gap: 10px;
-            margin-top: 30px;
+            gap: 12px;
+            margin-top: 40px;
         }
         
         .action-btn {
             flex: 1;
-            padding: 15px;
-            font-size: 16px;
+            padding: 18px;
+            font-size: 18px;
             font-weight: bold;
             border: none;
-            border-radius: 10px;
+            border-radius: 12px;
             cursor: pointer;
             transition: all 0.3s;
         }
         
         .btn-share {
-            background: linear-gradient(90deg, #ff0000, #cc0000);
+            background: linear-gradient(135deg, #f093fb, #f5576c);
             color: white;
+            box-shadow: 0 4px 15px rgba(245,87,108,0.4);
         }
         
         .btn-retry {
-            background: #333;
+            background: linear-gradient(135deg, #667eea, #764ba2);
             color: white;
+            box-shadow: 0 4px 15px rgba(102,126,234,0.4);
         }
         
         .action-btn:hover {
-            transform: translateY(-2px);
+            transform: translateY(-3px);
         }
         
         .disclaimer {
-            margin-top: 30px;
-            padding: 15px;
-            background: #fff3cd;
-            border-radius: 8px;
-            font-size: 12px;
+            margin-top: 35px;
+            padding: 18px;
+            background: linear-gradient(135deg, #fff3cd 0%, #ffe5a0 100%);
+            border-radius: 10px;
+            font-size: 14px;
             color: #856404;
             text-align: center;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.05);
         }
         
         /* 评级颜色 */
-        .grade-超夯 { color: #ff0000; text-shadow: 2px 2px 4px rgba(255,0,0,0.3); }
+        .grade-超夯 { 
+            background: linear-gradient(135deg, #ff0844, #ffb199);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
         .grade-很夯 { color: #ff6b00; }
         .grade-不夯不拉 { color: #ffa500; }
         .grade-有点拉 { color: #999; }
         .grade-巨拉 { color: #666; }
         .grade-拉爆了 { color: #333; }
         
+        /* 海报样式 */
+        .poster-overlay {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: rgba(0,0,0,0.8);
+            z-index: 1000;
+            animation: fadeIn 0.3s ease;
+        }
+        
+        .poster-overlay.active {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+        
+        .poster-container {
+            position: relative;
+            max-width: 90%;
+            max-height: 90%;
+        }
+        
+        #posterCanvas {
+            max-width: 100%;
+            max-height: 90vh;
+            border-radius: 15px;
+            box-shadow: 0 20px 60px rgba(0,0,0,0.5);
+        }
+        
+        .poster-actions {
+            text-align: center;
+            margin-top: 20px;
+        }
+        
+        .poster-btn {
+            padding: 12px 30px;
+            margin: 0 10px;
+            font-size: 16px;
+            font-weight: bold;
+            border: none;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+        
+        .btn-download {
+            background: linear-gradient(135deg, #f093fb, #f5576c);
+            color: white;
+        }
+        
+        .btn-close {
+            background: #666;
+            color: white;
+        }
+        
+        .poster-btn:hover {
+            transform: translateY(-2px);
+        }
+        
         @media (max-width: 600px) {
-            .main-title { font-size: 36px; }
-            .result-title { font-size: 28px; }
-            .result-badge { font-size: 56px; }
+            .main-title { font-size: 38px; }
+            .result-title { font-size: 30px; }
+            .result-badge { font-size: 70px; }
         }
     </style>
 </head>
@@ -505,12 +637,23 @@
             </div>
 
             <div class="action-btns">
-                <button class="action-btn btn-share" onclick="shareResult()">📤 生成海报分享</button>
+                <button class="action-btn btn-share" onclick="generatePoster()">📤 生成海报</button>
                 <button class="action-btn btn-retry" onclick="resetTest()">🔄 再测一次</button>
             </div>
 
             <div class="disclaimer">
                 ⚠️ 本测试仅供娱乐，不构成任何相亲建议，杠就是你对~
+            </div>
+        </div>
+    </div>
+
+    <!-- 海报弹窗 -->
+    <div class="poster-overlay" id="posterOverlay">
+        <div class="poster-container">
+            <canvas id="posterCanvas"></canvas>
+            <div class="poster-actions">
+                <button class="poster-btn btn-download" onclick="downloadPoster()">💾 下载图片</button>
+                <button class="poster-btn btn-close" onclick="closePoster()">✕ 关闭</button>
             </div>
         </div>
     </div>
@@ -537,12 +680,12 @@
         };
 
         const GRADES = [
-            {min: 90, name: '超夯', emoji: '🔥🔥🔥', rank: 98, comment: '恭喜！你就是相亲市场的天花板！\n硬件条件拉满，走到哪都是焦点。\n建议保持谦虚，否则容易被人嫉妒😏'},
-            {min: 75, name: '很夯', emoji: '🔥🔥', rank: 85, comment: '优质青年！相亲市场的香饽饽！\n条件硬核，根本不愁找对象。\n继续保持，幸福就在不远处~'},
-            {min: 60, name: '不夯不拉', emoji: '😊', rank: 60, comment: '中上水平！相亲市场的实力派！\n条件不错，稍微努力就能更夯。\n加把劲，升级指日可待！'},
-            {min: 45, name: '有点拉', emoji: '😅', rank: 35, comment: '有点拉胯啊朋友...\n条件一般般，需要靠内在加分了。\n但是！人品性格更重要，别灰心！'},
-            {min: 30, name: '巨拉', emoji: '😭', rank: 15, comment: '巨拉预警！相亲市场的硬模式选手！\n条件确实有点拉，但还能抢救一下。\n快去提升自己，翻身还有机会！'},
-            {min: 0, name: '拉爆了', emoji: '💀', rank: 2, comment: '拉到极致了属于是...\n建议别急着相亲，先把自己收拾收拾。\n记住：没有人天生拉，只有不努力的拉！'}
+            {min: 90, name: '超夯', emoji: '🔥🔥🔥', rank: 98, comment: '恭喜！你就是相亲市场的天花板！\n硬件条件拉满，走到哪都是焦点。\n建议保持谦虚，否则容易被人嫉妒😏', color: '#ff0844'},
+            {min: 75, name: '很夯', emoji: '🔥🔥', rank: 85, comment: '优质青年！相亲市场的香饽饽！\n条件硬核，根本不愁找对象。\n继续保持，幸福就在不远处~', color: '#ff6b00'},
+            {min: 60, name: '不夯不拉', emoji: '😊', rank: 60, comment: '中上水平！相亲市场的实力派！\n条件不错，稍微努力就能更夯。\n加把劲，升级指日可待！', color: '#ffa500'},
+            {min: 45, name: '有点拉', emoji: '😅', rank: 35, comment: '有点拉胯啊朋友...\n条件一般般，需要靠内在加分了。\n但是！人品性格更重要，别灰心！', color: '#999'},
+            {min: 30, name: '巨拉', emoji: '😭', rank: 15, comment: '巨拉预警！相亲市场的硬模式选手！\n条件确实有点拉，但还能抢救一下。\n快去提升自己，翻身还有机会！', color: '#666'},
+            {min: 0, name: '拉爆了', emoji: '💀', rank: 2, comment: '拉到极致了属于是...\n建议别急着相亲，先把自己收拾收拾。\n记住：没有人天生拉，只有不努力的拉！', color: '#333'}
         ];
 
         let currentData = {};
@@ -627,7 +770,7 @@
             const industryScore = scores.industry[form.industry.value] || 0;
             const govScore = scores.gov[form.gov.value] || 0;
             
-            const totalScore = heightScore + looksScore + salaryScore + cityScore + industryScore + govScore + 10; // +10保底分
+            const totalScore = heightScore + looksScore + salaryScore + cityScore + industryScore + govScore + 10;
             
             // 保存数据
             currentData = {
@@ -651,6 +794,7 @@
             
             // 找到对应等级
             const grade = GRADES.find(g => totalScore >= g.min);
+            currentData.grade = grade;
             
             // 更新UI
             document.getElementById('resultBadge').textContent = grade.emoji;
@@ -688,6 +832,9 @@
                 }
             }
             
+            currentData.strengths = strengths;
+            currentData.weaknesses = weaknesses;
+            
             document.getElementById('strengthBox').innerHTML = `
                 <div class="analysis-label">✅ 优势项：</div>
                 <div class="analysis-content">${strengths.length ? strengths.join('、') : '暂无突出优势项'}</div>
@@ -701,8 +848,139 @@
             showPage('resultPage');
         }
 
-        function shareResult() {
-            alert('📸 海报生成功能开发中...\n\n暂时可以截图分享到朋友圈哦！');
+        // 生成海报
+        function generatePoster() {
+            const canvas = document.getElementById('posterCanvas');
+            const ctx = canvas.getContext('2d');
+            
+            // 设置画布尺寸
+            canvas.width = 750;
+            canvas.height = 1334;
+            
+            const {grade, totalScore, strengths, weaknesses} = currentData;
+            
+            // 渐变背景
+            const gradient = ctx.createLinearGradient(0, 0, 0, canvas.height);
+            gradient.addColorStop(0, '#f093fb');
+            gradient.addColorStop(1, '#f5576c');
+            ctx.fillStyle = gradient;
+            ctx.fillRect(0, 0, canvas.width, canvas.height);
+            
+            // 白色卡片
+            ctx.fillStyle = 'white';
+            ctx.shadowColor = 'rgba(0,0,0,0.2)';
+            ctx.shadowBlur = 30;
+            ctx.shadowOffsetY = 10;
+            roundRect(ctx, 40, 100, canvas.width - 80, canvas.height - 200, 20);
+            ctx.fill();
+            ctx.shadowColor = 'transparent';
+            
+            // 标题
+            ctx.fillStyle = '#333';
+            ctx.font = 'bold 60px "Microsoft YaHei"';
+            ctx.textAlign = 'center';
+            ctx.fillText('相亲夯拉榜', canvas.width / 2, 220);
+            
+            // Emoji
+            ctx.font = '150px Arial';
+            ctx.fillText(grade.emoji, canvas.width / 2, 400);
+            
+            // 等级
+            ctx.font = 'bold 80px "Microsoft YaHei"';
+            ctx.fillStyle = grade.color;
+            ctx.fillText(grade.name, canvas.width / 2, 530);
+            
+            // 分数
+            ctx.font = 'bold 50px "Microsoft YaHei"';
+            ctx.fillStyle = '#666';
+            ctx.fillText(`${totalScore}分`, canvas.width / 2, 610);
+            
+            // 排名
+            ctx.font = '35px "Microsoft YaHei"';
+            ctx.fillStyle = '#999';
+            ctx.fillText(`超过${grade.rank}%的同龄异性`, canvas.width / 2, 680);
+            
+            // 优势项
+            ctx.textAlign = 'left';
+            ctx.font = 'bold 38px "Microsoft YaHei"';
+            ctx.fillStyle = '#4caf50';
+            ctx.fillText('✅ 优势项', 100, 780);
+            
+            ctx.font = '32px "Microsoft YaHei"';
+            ctx.fillStyle = '#666';
+            const strengthText = strengths.length ? strengths.join('、') : '暂无突出优势';
+            wrapText(ctx, strengthText, 100, 840, canvas.width - 200, 40);
+            
+            // 短板项
+            ctx.font = 'bold 38px "Microsoft YaHei"';
+            ctx.fillStyle = '#f44336';
+            ctx.fillText('⚠️ 短板项', 100, 980);
+            
+            ctx.font = '32px "Microsoft YaHei"';
+            ctx.fillStyle = '#666';
+            const weaknessText = weaknesses.length ? weaknesses.join('、') : '各项均衡';
+            wrapText(ctx, weaknessText, 100, 1040, canvas.width - 200, 40);
+            
+            // 底部水印
+            ctx.textAlign = 'center';
+            ctx.font = '28px "Microsoft YaHei"';
+            ctx.fillStyle = '#999';
+            ctx.fillText('长按保存图片 · 分享到朋友圈', canvas.width / 2, 1240);
+            
+            // 显示海报
+            document.getElementById('posterOverlay').classList.add('active');
+        }
+
+        // 辅助函数：圆角矩形
+        function roundRect(ctx, x, y, width, height, radius) {
+            ctx.beginPath();
+            ctx.moveTo(x + radius, y);
+            ctx.lineTo(x + width - radius, y);
+            ctx.quadraticCurveTo(x + width, y, x + width, y + radius);
+            ctx.lineTo(x + width, y + height - radius);
+            ctx.quadraticCurveTo(x + width, y + height, x + width - radius, y + height);
+            ctx.lineTo(x + radius, y + height);
+            ctx.quadraticCurveTo(x, y + height, x, y + height - radius);
+            ctx.lineTo(x, y + radius);
+            ctx.quadraticCurveTo(x, y, x + radius, y);
+            ctx.closePath();
+        }
+
+        // 辅助函数：文本换行
+        function wrapText(ctx, text, x, y, maxWidth, lineHeight) {
+            const words = text.split('');
+            let line = '';
+            let testLine = '';
+            let lineCount = 0;
+            
+            for (let n = 0; n < words.length; n++) {
+                testLine += words[n];
+                const metrics = ctx.measureText(testLine);
+                
+                if (metrics.width > maxWidth && n > 0) {
+                    ctx.fillText(line, x, y + lineCount * lineHeight);
+                    line = words[n];
+                    testLine = words[n];
+                    lineCount++;
+                } else {
+                    line += words[n];
+                }
+            }
+            ctx.fillText(line, x, y + lineCount * lineHeight);
+        }
+
+        // 下载海报
+        function downloadPoster() {
+            const canvas = document.getElementById('posterCanvas');
+            const link = document.createElement('a');
+            link.download = `相亲夯拉榜-${currentData.grade.name}-${Date.now()}.png`;
+            link.href = canvas.toDataURL('image/png');
+            link.click();
+        }
+
+        // 关闭海报
+        function closePoster() {
+            document.getElementById('posterOverlay').classList.remove('active');
         }
 
         function resetTest() {
