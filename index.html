@@ -1,0 +1,719 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>相亲夯拉榜 | 测测你在相亲市场是夯还是拉</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: "Microsoft YaHei", -apple-system, BlinkMacSystemFont, sans-serif;
+            background: linear-gradient(135deg, #000000 0%, #434343 100%);
+            min-height: 100vh;
+            padding: 10px;
+        }
+        
+        .container {
+            max-width: 500px;
+            margin: 20px auto;
+            background: white;
+            border-radius: 16px;
+            box-shadow: 0 10px 40px rgba(0,0,0,0.5);
+            overflow: hidden;
+        }
+        
+        /* 首页样式 */
+        .page {
+            display: none;
+            animation: fadeIn 0.5s ease;
+        }
+        
+        .page.active {
+            display: block;
+        }
+        
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        
+        .home-page {
+            text-align: center;
+            padding: 40px 20px;
+            background: linear-gradient(135deg, #ff0000 0%, #000000 100%);
+            color: white;
+        }
+        
+        .logo {
+            font-size: 64px;
+            margin-bottom: 10px;
+            animation: pulse 2s infinite;
+        }
+        
+        @keyframes pulse {
+            0%, 100% { transform: scale(1); }
+            50% { transform: scale(1.1); }
+        }
+        
+        .main-title {
+            font-size: 42px;
+            font-weight: bold;
+            margin-bottom: 15px;
+            text-shadow: 3px 3px 6px rgba(0,0,0,0.5);
+            letter-spacing: 2px;
+        }
+        
+        .subtitle {
+            font-size: 18px;
+            margin-bottom: 10px;
+            opacity: 0.95;
+        }
+        
+        .desc {
+            font-size: 14px;
+            opacity: 0.8;
+            margin-bottom: 40px;
+        }
+        
+        .start-btn {
+            background: white;
+            color: #ff0000;
+            border: none;
+            padding: 18px 50px;
+            font-size: 22px;
+            font-weight: bold;
+            border-radius: 50px;
+            cursor: pointer;
+            box-shadow: 0 8px 20px rgba(0,0,0,0.3);
+            transition: all 0.3s;
+        }
+        
+        .start-btn:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 12px 30px rgba(0,0,0,0.4);
+        }
+        
+        /* 问卷页面样式 */
+        .form-page {
+            padding: 30px 20px;
+        }
+        
+        .progress {
+            background: #f0f0f0;
+            height: 8px;
+            border-radius: 4px;
+            margin-bottom: 30px;
+            overflow: hidden;
+        }
+        
+        .progress-bar {
+            height: 100%;
+            background: linear-gradient(90deg, #ff0000, #ff6b6b);
+            transition: width 0.3s;
+            border-radius: 4px;
+        }
+        
+        .question {
+            margin-bottom: 30px;
+        }
+        
+        .question-label {
+            font-size: 16px;
+            font-weight: bold;
+            color: #333;
+            margin-bottom: 12px;
+            display: block;
+        }
+        
+        .question-label .required {
+            color: #ff0000;
+        }
+        
+        .options {
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+        }
+        
+        .option {
+            padding: 15px;
+            background: #f8f8f8;
+            border: 2px solid #e0e0e0;
+            border-radius: 10px;
+            cursor: pointer;
+            transition: all 0.3s;
+            display: flex;
+            align-items: center;
+            font-size: 15px;
+        }
+        
+        .option:hover {
+            border-color: #ff0000;
+            background: #fff5f5;
+        }
+        
+        .option input[type="radio"] {
+            margin-right: 10px;
+            cursor: pointer;
+            accent-color: #ff0000;
+        }
+        
+        .option.selected {
+            border-color: #ff0000;
+            background: #fff5f5;
+        }
+        
+        select {
+            width: 100%;
+            padding: 15px;
+            font-size: 15px;
+            border: 2px solid #e0e0e0;
+            border-radius: 10px;
+            background: white;
+            cursor: pointer;
+            transition: border-color 0.3s;
+        }
+        
+        select:focus {
+            outline: none;
+            border-color: #ff0000;
+        }
+        
+        .submit-btn {
+            width: 100%;
+            padding: 18px;
+            font-size: 20px;
+            font-weight: bold;
+            background: linear-gradient(90deg, #ff0000, #cc0000);
+            color: white;
+            border: none;
+            border-radius: 12px;
+            cursor: pointer;
+            transition: all 0.3s;
+            margin-top: 30px;
+        }
+        
+        .submit-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 20px rgba(255,0,0,0.4);
+        }
+        
+        .submit-btn:disabled {
+            background: #ccc;
+            cursor: not-allowed;
+            transform: none;
+        }
+        
+        /* 结果页样式 */
+        .result-page {
+            padding: 30px 20px;
+            text-align: center;
+        }
+        
+        .result-badge {
+            font-size: 72px;
+            margin: 20px 0;
+        }
+        
+        .result-title {
+            font-size: 36px;
+            font-weight: bold;
+            margin: 20px 0;
+        }
+        
+        .result-rank {
+            font-size: 18px;
+            color: #666;
+            margin-bottom: 30px;
+        }
+        
+        .result-comment {
+            font-size: 18px;
+            line-height: 1.8;
+            color: #333;
+            padding: 20px;
+            background: #f8f8f8;
+            border-radius: 12px;
+            margin-bottom: 30px;
+        }
+        
+        .analysis {
+            text-align: left;
+            margin: 30px 0;
+        }
+        
+        .analysis-title {
+            font-size: 20px;
+            font-weight: bold;
+            margin-bottom: 15px;
+            color: #333;
+        }
+        
+        .strength, .weakness {
+            padding: 15px;
+            border-radius: 10px;
+            margin-bottom: 15px;
+        }
+        
+        .strength {
+            background: #e8f5e9;
+            border-left: 4px solid #4caf50;
+        }
+        
+        .weakness {
+            background: #ffebee;
+            border-left: 4px solid #f44336;
+        }
+        
+        .analysis-label {
+            font-weight: bold;
+            margin-bottom: 8px;
+        }
+        
+        .analysis-content {
+            color: #666;
+            line-height: 1.6;
+        }
+        
+        .action-btns {
+            display: flex;
+            gap: 10px;
+            margin-top: 30px;
+        }
+        
+        .action-btn {
+            flex: 1;
+            padding: 15px;
+            font-size: 16px;
+            font-weight: bold;
+            border: none;
+            border-radius: 10px;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+        
+        .btn-share {
+            background: linear-gradient(90deg, #ff0000, #cc0000);
+            color: white;
+        }
+        
+        .btn-retry {
+            background: #333;
+            color: white;
+        }
+        
+        .action-btn:hover {
+            transform: translateY(-2px);
+        }
+        
+        .disclaimer {
+            margin-top: 30px;
+            padding: 15px;
+            background: #fff3cd;
+            border-radius: 8px;
+            font-size: 12px;
+            color: #856404;
+            text-align: center;
+        }
+        
+        /* 评级颜色 */
+        .grade-超夯 { color: #ff0000; text-shadow: 2px 2px 4px rgba(255,0,0,0.3); }
+        .grade-很夯 { color: #ff6b00; }
+        .grade-不夯不拉 { color: #ffa500; }
+        .grade-有点拉 { color: #999; }
+        .grade-巨拉 { color: #666; }
+        .grade-拉爆了 { color: #333; }
+        
+        @media (max-width: 600px) {
+            .main-title { font-size: 36px; }
+            .result-title { font-size: 28px; }
+            .result-badge { font-size: 56px; }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <!-- 首页 -->
+        <div class="page active home-page" id="homePage">
+            <div class="logo">🔥💔</div>
+            <h1 class="main-title">相亲夯拉榜</h1>
+            <p class="subtitle">测测你在相亲市场，是夯到爆还是拉到垮？</p>
+            <p class="desc">纯娱乐向 | 7道题解锁你的相亲段位</p>
+            <button class="start-btn" onclick="startTest()">开始测试</button>
+        </div>
+
+        <!-- 问卷页 -->
+        <div class="page form-page" id="formPage">
+            <div class="progress">
+                <div class="progress-bar" id="progressBar" style="width: 0%"></div>
+            </div>
+
+            <form id="quizForm">
+                <!-- Q1: 性别 -->
+                <div class="question">
+                    <label class="question-label">
+                        <span class="required">*</span> 1. 你的性别
+                    </label>
+                    <div class="options">
+                        <label class="option">
+                            <input type="radio" name="gender" value="male" required>
+                            <span>男</span>
+                        </label>
+                        <label class="option">
+                            <input type="radio" name="gender" value="female">
+                            <span>女</span>
+                        </label>
+                    </div>
+                </div>
+
+                <!-- Q2: 身高 -->
+                <div class="question">
+                    <label class="question-label">
+                        <span class="required">*</span> 2. 你的身高
+                    </label>
+                    <select name="height" required>
+                        <option value="">请选择</option>
+                        <option value="150">150cm以下</option>
+                        <option value="155">150-154cm</option>
+                        <option value="160">155-159cm</option>
+                        <option value="165">160-164cm</option>
+                        <option value="170">165-169cm</option>
+                        <option value="175">170-174cm</option>
+                        <option value="180">175-179cm</option>
+                        <option value="185">180-184cm</option>
+                        <option value="190">185cm及以上</option>
+                    </select>
+                </div>
+
+                <!-- Q3: 颜值 -->
+                <div class="question">
+                    <label class="question-label">
+                        <span class="required">*</span> 3. 你的颜值档位
+                    </label>
+                    <div class="options">
+                        <label class="option">
+                            <input type="radio" name="looks" value="6" required>
+                            <span>🔥 颜值天花板 - 回头率100%</span>
+                        </label>
+                        <label class="option">
+                            <input type="radio" name="looks" value="5">
+                            <span>✨ 很有颜值 - 经常被夸好看</span>
+                        </label>
+                        <label class="option">
+                            <input type="radio" name="looks" value="4">
+                            <span>😊 长相周正 - 五官端正舒服</span>
+                        </label>
+                        <label class="option">
+                            <input type="radio" name="looks" value="3">
+                            <span>😐 有点普通 - 丢人群里找不到</span>
+                        </label>
+                        <label class="option">
+                            <input type="radio" name="looks" value="2">
+                            <span>😔 颜值拉胯 - 有明显外貌硬伤</span>
+                        </label>
+                        <label class="option">
+                            <input type="radio" name="looks" value="1">
+                            <span>💀 摆烂随缘 - 完全不打理</span>
+                        </label>
+                    </div>
+                </div>
+
+                <!-- Q4: 月薪 -->
+                <div class="question">
+                    <label class="question-label">
+                        <span class="required">*</span> 4. 你的税前月薪
+                    </label>
+                    <select name="salary" required>
+                        <option value="">请选择</option>
+                        <option value="0">3k以下</option>
+                        <option value="1">3k-4.9k</option>
+                        <option value="2">5k-7.9k</option>
+                        <option value="3">8k-1.4w</option>
+                        <option value="4">1.5w-2.9w</option>
+                        <option value="5">3w-4.9w</option>
+                        <option value="6">5w及以上</option>
+                    </select>
+                </div>
+
+                <!-- Q5: 城市 -->
+                <div class="question">
+                    <label class="question-label">
+                        <span class="required">*</span> 5. 你所在的城市
+                    </label>
+                    <select name="city" required>
+                        <option value="">请选择</option>
+                        <option value="5">一线城市（北上广深）</option>
+                        <option value="4">新一线城市（杭州/成都/武汉等）</option>
+                        <option value="3">二线省会/经济强市</option>
+                        <option value="2">三四线地级市</option>
+                        <option value="1">县城及以下</option>
+                    </select>
+                </div>
+
+                <!-- Q6: 行业 -->
+                <div class="question">
+                    <label class="question-label">
+                        <span class="required">*</span> 6. 你的行业
+                    </label>
+                    <select name="industry" required>
+                        <option value="">请选择</option>
+                        <option value="4">热门优质（金融/大厂/医疗/教育/法律/烟草/电力）</option>
+                        <option value="3">稳定体面（企业白领/技术岗/运营/设计）</option>
+                        <option value="2">普通常规（个体户/自由职业/服务业管理）</option>
+                        <option value="1">基础岗位（服务业/流水线/临时工）</option>
+                        <option value="0">无业待业（超6个月）</option>
+                    </select>
+                </div>
+
+                <!-- Q7: 体制内 -->
+                <div class="question">
+                    <label class="question-label">
+                        <span class="required">*</span> 7. 是否体制内
+                    </label>
+                    <div class="options">
+                        <label class="option">
+                            <input type="radio" name="gov" value="1" required>
+                            <span>是（公务员/事业单位/国企正式编）</span>
+                        </label>
+                        <label class="option">
+                            <input type="radio" name="gov" value="0">
+                            <span>否</span>
+                        </label>
+                    </div>
+                </div>
+
+                <button type="submit" class="submit-btn" id="submitBtn" disabled>查看我的夯拉结果</button>
+            </form>
+        </div>
+
+        <!-- 结果页 -->
+        <div class="page result-page" id="resultPage">
+            <div class="result-badge" id="resultBadge">🔥</div>
+            <h2 class="result-title" id="resultTitle">你的相亲段位：<span id="resultGrade">超夯</span></h2>
+            <p class="result-rank" id="resultRank">全国排名：超过 98% 的同龄异性</p>
+            <div class="result-comment" id="resultComment"></div>
+            
+            <div class="analysis">
+                <h3 class="analysis-title">📊 长短板分析</h3>
+                <div class="strength" id="strengthBox"></div>
+                <div class="weakness" id="weaknessBox"></div>
+            </div>
+
+            <div class="action-btns">
+                <button class="action-btn btn-share" onclick="shareResult()">📤 生成海报分享</button>
+                <button class="action-btn btn-retry" onclick="resetTest()">🔄 再测一次</button>
+            </div>
+
+            <div class="disclaimer">
+                ⚠️ 本测试仅供娱乐，不构成任何相亲建议，杠就是你对~
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // 评分规则
+        const SCORING = {
+            male: {
+                height: {150:0, 155:0, 160:0, 165:5, 170:10, 175:14, 180:17, 185:20, 190:20},
+                looks: {1:0, 2:2, 3:5, 4:9, 5:12, 6:15},
+                salary: {0:0, 1:0, 2:5, 3:12, 4:20, 5:25, 6:30},
+                city: {1:1, 2:3, 3:6, 4:8, 5:10},
+                industry: {0:0, 1:1, 2:4, 3:6, 4:8},
+                gov: {0:0, 1:7}
+            },
+            female: {
+                height: {150:3, 155:8, 160:16, 165:20, 170:20, 175:16, 180:12, 185:3, 190:3},
+                looks: {1:0, 2:3, 3:8, 4:15, 5:20, 6:25},
+                salary: {0:0, 1:1, 2:3, 3:4, 4:5, 5:5, 6:5},
+                city: {1:2, 2:5, 3:9, 4:12, 5:15},
+                industry: {0:0, 1:2, 2:6, 3:9, 4:12},
+                gov: {0:0, 1:13}
+            }
+        };
+
+        const GRADES = [
+            {min: 90, name: '超夯', emoji: '🔥🔥🔥', rank: 98, comment: '恭喜！你就是相亲市场的天花板！\n硬件条件拉满，走到哪都是焦点。\n建议保持谦虚，否则容易被人嫉妒😏'},
+            {min: 75, name: '很夯', emoji: '🔥🔥', rank: 85, comment: '优质青年！相亲市场的香饽饽！\n条件硬核，根本不愁找对象。\n继续保持，幸福就在不远处~'},
+            {min: 60, name: '不夯不拉', emoji: '😊', rank: 60, comment: '中上水平！相亲市场的实力派！\n条件不错，稍微努力就能更夯。\n加把劲，升级指日可待！'},
+            {min: 45, name: '有点拉', emoji: '😅', rank: 35, comment: '有点拉胯啊朋友...\n条件一般般，需要靠内在加分了。\n但是！人品性格更重要，别灰心！'},
+            {min: 30, name: '巨拉', emoji: '😭', rank: 15, comment: '巨拉预警！相亲市场的硬模式选手！\n条件确实有点拉，但还能抢救一下。\n快去提升自己，翻身还有机会！'},
+            {min: 0, name: '拉爆了', emoji: '💀', rank: 2, comment: '拉到极致了属于是...\n建议别急着相亲，先把自己收拾收拾。\n记住：没有人天生拉，只有不努力的拉！'}
+        ];
+
+        let currentData = {};
+
+        // 页面跳转
+        function showPage(pageId) {
+            document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
+            document.getElementById(pageId).classList.add('active');
+        }
+
+        function startTest() {
+            showPage('formPage');
+        }
+
+        // 选项高亮
+        document.querySelectorAll('.option').forEach(option => {
+            option.addEventListener('click', function() {
+                const radio = this.querySelector('input[type="radio"]');
+                if (radio) {
+                    const name = radio.name;
+                    document.querySelectorAll(`input[name="${name}"]`).forEach(r => {
+                        r.parentElement.classList.remove('selected');
+                    });
+                    this.classList.add('selected');
+                    radio.checked = true;
+                    updateProgress();
+                    checkFormComplete();
+                }
+            });
+        });
+
+        // 监听下拉框变化
+        document.querySelectorAll('select').forEach(select => {
+            select.addEventListener('change', () => {
+                updateProgress();
+                checkFormComplete();
+            });
+        });
+
+        // 更新进度条
+        function updateProgress() {
+            const form = document.getElementById('quizForm');
+            const totalQuestions = 7;
+            let answered = 0;
+            
+            if (form.gender.value) answered++;
+            if (form.height.value) answered++;
+            if (form.looks.value) answered++;
+            if (form.salary.value) answered++;
+            if (form.city.value) answered++;
+            if (form.industry.value) answered++;
+            if (form.gov.value) answered++;
+            
+            const progress = (answered / totalQuestions) * 100;
+            document.getElementById('progressBar').style.width = progress + '%';
+        }
+
+        // 检查表单完整性
+        function checkFormComplete() {
+            const form = document.getElementById('quizForm');
+            const submitBtn = document.getElementById('submitBtn');
+            const isComplete = form.checkValidity();
+            submitBtn.disabled = !isComplete;
+        }
+
+        // 表单提交
+        document.getElementById('quizForm').addEventListener('submit', function(e) {
+            e.preventDefault();
+            calculateResult();
+        });
+
+        function calculateResult() {
+            const form = document.getElementById('quizForm');
+            const gender = form.gender.value;
+            const scores = SCORING[gender];
+            
+            // 计算各项得分
+            const heightScore = scores.height[form.height.value] || 0;
+            const looksScore = scores.looks[form.looks.value] || 0;
+            const salaryScore = scores.salary[form.salary.value] || 0;
+            const cityScore = scores.city[form.city.value] || 0;
+            const industryScore = scores.industry[form.industry.value] || 0;
+            const govScore = scores.gov[form.gov.value] || 0;
+            
+            const totalScore = heightScore + looksScore + salaryScore + cityScore + industryScore + govScore + 10; // +10保底分
+            
+            // 保存数据
+            currentData = {
+                gender,
+                totalScore,
+                breakdown: {
+                    height: heightScore,
+                    looks: looksScore,
+                    salary: salaryScore,
+                    city: cityScore,
+                    industry: industryScore,
+                    gov: govScore
+                }
+            };
+            
+            displayResult();
+        }
+
+        function displayResult() {
+            const {totalScore, breakdown, gender} = currentData;
+            
+            // 找到对应等级
+            const grade = GRADES.find(g => totalScore >= g.min);
+            
+            // 更新UI
+            document.getElementById('resultBadge').textContent = grade.emoji;
+            document.getElementById('resultGrade').textContent = grade.name;
+            document.getElementById('resultGrade').className = 'grade-' + grade.name;
+            document.getElementById('resultRank').textContent = `全国排名：超过 ${grade.rank}% 的同龄异性`;
+            document.getElementById('resultComment').textContent = grade.comment;
+            
+            // 分析长短板
+            const strengths = [];
+            const weaknesses = [];
+            
+            const labels = {
+                height: '身高',
+                looks: '颜值',
+                salary: '月薪',
+                city: '城市',
+                industry: '行业',
+                gov: '体制内'
+            };
+            
+            const maxScores = gender === 'male' 
+                ? {height:20, looks:15, salary:30, city:10, industry:8, gov:7}
+                : {height:20, looks:25, salary:5, city:15, industry:12, gov:13};
+            
+            for (let key in breakdown) {
+                const score = breakdown[key];
+                const max = maxScores[key];
+                const percent = (score / max) * 100;
+                
+                if (percent >= 70) {
+                    strengths.push(`${labels[key]} (${score}/${max}分)`);
+                } else if (percent < 40 && max > 5) {
+                    weaknesses.push(`${labels[key]} (${score}/${max}分)`);
+                }
+            }
+            
+            document.getElementById('strengthBox').innerHTML = `
+                <div class="analysis-label">✅ 优势项：</div>
+                <div class="analysis-content">${strengths.length ? strengths.join('、') : '暂无突出优势项'}</div>
+            `;
+            
+            document.getElementById('weaknessBox').innerHTML = `
+                <div class="analysis-label">⚠️ 短板项：</div>
+                <div class="analysis-content">${weaknesses.length ? weaknesses.join('、') + '，提升空间大！' : '各项均衡，继续保持！'}</div>
+            `;
+            
+            showPage('resultPage');
+        }
+
+        function shareResult() {
+            alert('📸 海报生成功能开发中...\n\n暂时可以截图分享到朋友圈哦！');
+        }
+
+        function resetTest() {
+            document.getElementById('quizForm').reset();
+            document.querySelectorAll('.option').forEach(opt => {
+                opt.classList.remove('selected');
+            });
+            document.getElementById('progressBar').style.width = '0%';
+            document.getElementById('submitBtn').disabled = true;
+            showPage('homePage');
+        }
+    </script>
+</body>
+</html>
